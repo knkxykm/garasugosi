@@ -156,10 +156,11 @@ func _build_wizard() -> void:
 	_motion_option.add_item("静か — 間を大切に、ゆっくり")
 	_motion_option.add_item("標準 — 既定の動き")
 	_motion_option.add_item("活発 — 反応が少し早い")
+	_motion_option.add_item("カスタム — 現在の細かな設定を維持")
 	_motion_option.select(1)
 	col.add_child(_motion_option)
 	var motion_note := Label.new()
-	motion_note.text = "あとで characters/partner/profile.json から細かく調整できます。"
+	motion_note.text = "細かく調整した値は「カスタム」として保護します。あとで characters/partner/profile.json から直接調整もできます。"
 	motion_note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	motion_note.add_theme_color_override("font_color", Color(0.65, 0.72, 0.85))
 	col.add_child(motion_note)
@@ -208,6 +209,8 @@ func _choose_model() -> void:
 func _on_model_selected(path: String) -> void:
 	_model_source = path
 	_model_label.text = path.get_file()
+	# VRMごとに利用条件は異なるため、別モデルを選ぶたび確認を取り直す。
+	_license_check.button_pressed = false
 
 
 func _load_existing_into_form() -> void:
@@ -215,6 +218,7 @@ func _load_existing_into_form() -> void:
 	_name_edit.text = String(profile.get("display_name", ""))
 	_credit_edit.text = String(profile.get("credit", ""))
 	_touch_option.select(1 if String(profile.get("touch_with", "fingertip")) == "palm" else 0)
+	_motion_option.select(_detect_motion_preset(profile))
 
 	var lines_data := _load_json(LINES_PATH)
 	var texts: Array[String] = []
@@ -281,6 +285,40 @@ func _save_partner() -> void:
 	)
 
 
+func _detect_motion_preset(profile: Dictionary) -> int:
+	var quiet := {
+		"notice_delay": 0.18, "eye_follow": 0.10, "head_follow": 0.42, "head_return": 1.05,
+		"approach_delay": 0.20, "approach_time": 1.05, "return_time": 1.10,
+		"breath_period": 4.8, "blink_interval_min": 3.0, "blink_interval_max": 7.0
+	}
+	var standard := {
+		"notice_delay": 0.15, "eye_follow": 0.08, "head_follow": 0.35, "head_return": 0.9,
+		"approach_delay": 0.15, "approach_time": 0.85, "return_time": 0.95,
+		"breath_period": 4.2, "blink_interval_min": 2.5, "blink_interval_max": 6.0
+	}
+	var active := {
+		"notice_delay": 0.10, "eye_follow": 0.06, "head_follow": 0.25, "head_return": 0.75,
+		"approach_delay": 0.10, "approach_time": 0.65, "return_time": 0.75,
+		"breath_period": 3.6, "blink_interval_min": 2.0, "blink_interval_max": 5.0
+	}
+	if _motion_matches(profile, quiet):
+		return 0
+	if _motion_matches(profile, standard):
+		return 1
+	if _motion_matches(profile, active):
+		return 2
+	return 3
+
+
+func _motion_matches(profile: Dictionary, values: Dictionary) -> bool:
+	for key in values:
+		if not profile.has(key):
+			return false
+		if not is_equal_approx(float(profile[key]), float(values[key])):
+			return false
+	return true
+
+
 func _apply_motion_preset(profile: Dictionary, selected: int) -> void:
 	match selected:
 		0: # 静か
@@ -294,6 +332,17 @@ func _apply_motion_preset(profile: Dictionary, selected: int) -> void:
 			profile["breath_period"] = 4.8
 			profile["blink_interval_min"] = 3.0
 			profile["blink_interval_max"] = 7.0
+		1: # 標準
+			profile["notice_delay"] = 0.15
+			profile["eye_follow"] = 0.08
+			profile["head_follow"] = 0.35
+			profile["head_return"] = 0.9
+			profile["approach_delay"] = 0.15
+			profile["approach_time"] = 0.85
+			profile["return_time"] = 0.95
+			profile["breath_period"] = 4.2
+			profile["blink_interval_min"] = 2.5
+			profile["blink_interval_max"] = 6.0
 		2: # 活発
 			profile["notice_delay"] = 0.10
 			profile["eye_follow"] = 0.06
@@ -305,17 +354,8 @@ func _apply_motion_preset(profile: Dictionary, selected: int) -> void:
 			profile["breath_period"] = 3.6
 			profile["blink_interval_min"] = 2.0
 			profile["blink_interval_max"] = 5.0
-		_: # 標準
-			profile["notice_delay"] = 0.15
-			profile["eye_follow"] = 0.08
-			profile["head_follow"] = 0.35
-			profile["head_return"] = 0.9
-			profile["approach_delay"] = 0.15
-			profile["approach_time"] = 0.85
-			profile["return_time"] = 0.95
-			profile["breath_period"] = 4.2
-			profile["blink_interval_min"] = 2.5
-			profile["blink_interval_max"] = 6.0
+		_: # カスタム：既存の細かな値をそのまま残す
+			pass
 
 
 func _write_lines() -> bool:
