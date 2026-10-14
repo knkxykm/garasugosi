@@ -40,12 +40,22 @@ Godot 4.3 製。通信はしません。記録は端末の中にだけ残りま�
 
 ## 2. パソコンで開く
 
+### しっぽり明朝（任意・推奨）
+
+リポジトリ版は、配布を軽く保つためフォント本体を含めていません。未導入でもOSの明朝系フォントへ自動フォールバックして動きます。原版と同じ「しっぽり明朝」に揃える場合は、プロジェクト直下で次を1回実行してください。
+
+```bash
+python3 tools/setup_font.py
+```
+
+このスクリプトはセットアップ時だけ、公式 Google Fonts リポジトリから `ShipporiMincho-Regular.ttf` を取得し、SHA-256 を照合して `assets/fonts/` に置きます。アプリ本体には通信処理はありません。
+
 1. [Godot 4.3](https://godotengine.org/download/archive/4.3-stable/) を入れます（標準版。.NET 版ではない方）
-2. Godot で、このフォルダの `project.godot` を開きます
+2. プロジェクト直下で `python3 tools/setup_dependencies.py` を1回実行します。固定したコミットから godot-vrm と Godot-MToon-Shader を取得して `addons/` に配置します（セットアップ時のみ通信）
+3. Godot で、このフォルダの `project.godot` を開きます
    - 初回は VRM の読み込みに少し時間がかかります
-   - 書体の読み込みエラーが一度だけ出ることがありますが、読み込みが終われば消えます
    - プロジェクト設定 → プラグイン で「VRM」「Godot-MToon-Shader」が有効になっていることを確認します
-3. F5 で実行します。マウスでのクリック・長押しが、指のタッチとして扱われます
+4. F5 で実行します。マウスでのクリック・長押しが、指のタッチとして扱われます
 
 VRM を置き忘れたときは、画面に置き場所が表示されます。
 
@@ -138,8 +148,8 @@ VRM を置き忘れたときは、画面に置き場所が表示されます。
 ### 色・音・書体
 
 - 色：`systems/palette.gd`（月雪の体温パレット）。背景・波紋・文字の色はここだけで決まります
-- 効果音：`assets/sounds/kotsu.wav` を差し替えます
-- 書体：`assets/fonts/` と `project.godot` の `gui/theme/custom_font`、`ui/ui_style.gd` の `FONT_PATH`
+- 効果音：`systems/sfx_controller.gd` の `_make_kotsu()` で短い「こつ」を端末内生成します
+- 書体：`assets/fonts/` と `ui/ui_style.gd` の `FONT_PATH`
 
 ## 6. 記録と設定
 
@@ -170,7 +180,7 @@ effects/ripple_overlay.gd         硝子に広がる波紋
 data/interaction_logger.gd        触れ合いの記録（端末内のみ）
 data/line_book.gd                 語録
 ui/                               見た目・記録画面・設定画面
-addons/                           godot-vrm / Godot-MToon-Shader（V-Sekai, MIT）
+addons/                           setup_dependencies.py で導入する godot-vrm / Godot-MToon-Shader（V-Sekai, MIT）
 docs/作成手順.md                   このしくみを一から組み上げる手順
 ```
 
@@ -189,7 +199,7 @@ Claude に手伝ってもらって組み立てるときは、[docs/Claudeで組�
 ## ライセンス
 
 - このリポジトリのコード・アイコン・効果音：MIT License（[LICENSE](LICENSE)）
-- godot-vrm、Godot-MToon-Shader：MIT License（各 `addons/*/LICENSE`）
+- godot-vrm、Godot-MToon-Shader：MIT License（セットアップ時に各公式GitHubから固定コミットを取得）
 - しっぽり明朝：SIL Open Font License 1.1（`assets/fonts/OFL_ShipporiMincho.txt`）
 - Godot Engine：MIT License
 - あなたのパートナーの VRM には、それぞれの利用条件が適用されます

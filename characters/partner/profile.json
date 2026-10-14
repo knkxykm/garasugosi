@@ -1,0 +1,33 @@
+{
+  "id": "partner",
+  "display_name": "パートナー",
+  "model": "res://characters/partner/model/partner.vrm",
+  "credit": "",
+
+  "notice_delay": 0.15,
+  "eye_follow": 0.08,
+  "head_follow": 0.35,
+  "head_return": 0.9,
+  "eye_max_deg": 10.0,
+  "head_max_deg": 18.0,
+
+  "hold_threshold": 0.30,
+  "approach_delay": 0.15,
+  "approach_time": 0.85,
+  "hold_follow": 0.25,
+  "follow_duration": 0.35,
+  "follow_weight": 0.9,
+  "return_time": 0.95,
+  "sway_mm": 1.5,
+  "lean_deg": 7.0,
+  "touch_with": "fingertip",
+
+  "arm_down_deg": 72.0,
+  "breath_period": 4.2,
+  "blink_interval_min": 2.5,
+  "blink_interval_max": 6.0,
+
+  "frame_scale": 2.2,
+  "frame_top_margin": 0.06,
+  "glass_reach": 0.7
+}

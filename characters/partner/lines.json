@@ -1,0 +1,8 @@
+{
+  "_説明": "パートナーの語録。area: hand / head / face / shoulder、interaction: hold / tap / stroke。text を書いた行だけが使われる（空の行は使われない）。id は他と重ならなければ何でもよい。",
+  "lines": [
+    { "id": "hand_hold_01", "area": "hand", "interaction": "hold", "text": "" },
+    { "id": "hand_hold_02", "area": "hand", "interaction": "hold", "text": "" },
+    { "id": "hand_hold_03", "area": "hand", "interaction": "hold", "text": "" }
+  ]
+}

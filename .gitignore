@@ -2,3 +2,7 @@
 *.vrm
 build/
 .DS_Store
+assets/fonts/ShipporiMincho-Regular.ttf
+*.import
+addons/vrm/
+addons/Godot-MToon-Shader/

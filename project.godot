@@ -1,0 +1,31 @@
+config_version=5
+
+[application]
+config/name="硝子越し"
+run/main_scene="res://main.tscn"
+config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.067, 0.09, 0.161, 1)
+boot_splash/show_image=false
+config/features=PackedStringArray("4.3", "Mobile")
+
+[display]
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/handheld/orientation=1
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+enabled=PackedStringArray("res://addons/vrm/plugin.cfg", "res://addons/Godot-MToon-Shader/plugin.cfg")
+
+[input_devices]
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+
+[audio]
+
+general/ios/session_category=0
+general/ios/mix_with_others=true
