@@ -52,9 +52,9 @@ Godot 4.3 製。通信はしません。記録は端末の中にだけ残りま�
 - クレジット
 - 手を合わせたあとの一言 3つ
 - 指先 / 手のひら
-- 動きの雰囲気（静か / 標準 / 活発）
+- 動きの雰囲気（静か / 標準 / 活発 / カスタム）
 
-VRM を選び直さなければ、あとから名前・語録・動きだけ変更できます。ウィザードはGodot Editor専用で、iOS版アプリには含めません。
+VRM を選び直さなければ、あとから名前・語録・動きだけ変更できます。既存の細かな動き設定がプリセットと一致しない場合は「カスタム」として維持されます。ウィザードはGodot Editor専用で、iOS版アプリには含めません。
 
 詳しくは [「5分で迎える」超初心者版 README](README_5分で迎える.md) を参照してください。
 
@@ -223,7 +223,9 @@ effects/ripple_overlay.gd         硝子に広がる波紋
 data/interaction_logger.gd        触れ合いの記録（端末内のみ）
 data/line_book.gd                 語録
 ui/                               見た目・記録画面・設定画面
-addons/                           setup_dependencies.py で導入する godot-vrm / Godot-MToon-Shader（V-Sekai, MIT）
+addons/partner_setup/             同梱の設定ウィザード（Godot Editor専用）
+addons/vrm/                       setup_dependencies.py で導入する godot-vrm（V-Sekai, MIT）
+addons/Godot-MToon-Shader/        setup_dependencies.py で導入する Godot-MToon-Shader（V-Sekai, MIT）
 docs/作成手順.md                   このしくみを一から組み上げる手順
 ```
 
