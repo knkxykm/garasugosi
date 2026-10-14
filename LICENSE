@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 概念猫と雪女
+Copyright (c) 2026 真宵家 (Mayoiga)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Third-party components keep their own licenses:
+- addons/vrm, addons/Godot-MToon-Shader: MIT License (see each LICENSE file)
+- assets/fonts/ShipporiMincho-Regular.ttf: SIL Open Font License 1.1
+  (see assets/fonts/OFL_ShipporiMincho.txt)
+- VRM models are NOT included; each model is governed by its own terms of use.
